@@ -40,7 +40,6 @@ test "convert#string in terabytes to bytes":
   check convert("2 TB", "B") == "2000000000000.00 B"
 
 # Some real examples.
-
 test "convert#string in megabytes to gigabytes":
   check convert("211.1 MB", "GB") == "0.21 GB"
 ```
