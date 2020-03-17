@@ -2,8 +2,6 @@
 
 A Nim package to convert filesizes into other units, and turns filesizes into human readable strings.
 
-**Warning:** this package is still a WIP as I iron out the kinks and add better test coverage, use at your
-own peril. It is not even published on https://nimble.directory yet.
 
 ## Examples:
 
