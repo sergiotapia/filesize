@@ -1,8 +1,8 @@
 # Package
 
-version       = "0.1.0"
+version       = "1.0.0"
 author        = "Sergio Tapia"
-description   = "A new awesome nimble package"
+description   = "A Nim package to convert filesizes into other units, and turns filesizes into human readable strings."
 license       = "MIT"
 srcDir        = "src"
 
