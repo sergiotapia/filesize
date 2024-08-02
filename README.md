@@ -8,36 +8,37 @@ A Nim package to convert filesizes into other units, and turns filesizes into hu
 ```
 import filesize
 
-# Small to large units.
-test "convert#string in bytes to bytes":
-  check convert("1024 B", "B") == "1024 B"
-
-test "convert#string in bytes to kilobytes":
-  check convert("1024 B", "KB") == "1.02 KB"
-
-test "convert#string in bytes to megabytes":
-  check convert("1024 B", "MB") == "0.00 MB"
-
-test "convert#string in bytes to gigabytes":
-  check convert("1024 B", "GB") == "0.00 GB"
-
-test "convert#string in bytes to terabytes":
-  check convert("1024 B", "TB") == "0.00 TB"
-
-test "convert#string in bytes to petabytes":
-  check convert("1024 B", "PB") == "0.00 PB"
-
-# Large to small units.
-test "convert#string in terabytes to gigabytes":
-  check convert("8 TB", "GB") == "8000.00 GB"
-
-test "convert#string in gigabytes to megabytes":
-  check convert("2.048 GB", "MB") == "2048.00 MB"
-
-test "convert#string in terabytes to bytes":
-  check convert("2 TB", "B") == "2000000000000.00 B"
-
-# Some real examples.
-test "convert#string in megabytes to gigabytes":
-  check convert("211.1 MB", "GB") == "0.21 GB"
+suite "convert":
+  test "same unit":
+    check convert("1024 B", "B") == "1024 B"
+  
+  test "bytes to larger units":
+    check convert("1024 B", "KB") == "1.02 KB"
+    check convert("1024 B", "MB") == "0 MB"
+    check convert("1024 B", "GB") == "0 GB"
+  
+  test "larger units to bytes":
+    check convert("1 KB", "B") == "1000 B"
+    check convert("1 MB", "B") == "1000000 B"      
+  
+  test "between larger units":
+    check convert("1 GB", "MB") == "1000 MB"
+    check convert("1.5 TB", "GB") == "1500 GB"
+    check convert("1.78 PB", "GB") == "1780000 GB"
+  
+  test "very small results":
+    check convert("1 B", "YB") == "0 YB"
+  
+  test "very large results":
+    check convert("1 YB", "B") == "999999999999999983222784. B"
+  
+  test "invalid input":
+    expect ConversionError:
+      discard convert("invalid", "B")
+    expect ConversionError:
+      discard convert("100", "B")
+    expect ConversionError:
+      discard convert("100 X", "B")
+    expect ConversionError:
+      discard convert("100 B", "X")
 ```
